@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>pixelthing</title>
+    <style>
+      canvas {
+        border: 1px solid black;
+        max-height: 75%;
+        max-width: 75%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas width="1920" height="1080">
+    </canvas>
+    <button onclick="download()">download</button>
+    <script>
+      const canvas = document.querySelector("canvas");
+      const context = canvas.getContext("2d");
+      context.fillStyle = "purple";
+      context.fillRect(10, 10, 100, 100);
+
+      function download() {
+        const dataURL = canvas.toDataURL("image/png");
+        const downloadLink = document.createElement("a");
+        downloadLink.setAttribute("download", "pixelthing.png");
+        downloadLink.setAttribute("href", dataURL);
+        downloadLink.click();
+      }
+    </script>
+  </body>
+</html>
