@@ -19,8 +19,30 @@
     <script>
       const canvas = document.querySelector("canvas");
       const context = canvas.getContext("2d");
-      context.fillStyle = "purple";
-      context.fillRect(10, 10, 100, 100);
+      const startingColor = [0, 0, 0]
+      let currentColor = startingColor;
+      for (let i = 0; i < 1920; i++) {
+        for (let j = 0; j < 1080; j++) {
+          currentColor[0] = test(currentColor[0], 0);
+          currentColor[1] = test(currentColor[1], 1);
+          currentColor[2] = test(currentColor[2], 2);
+          context.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
+          context.fillRect(i, j, 1, 1);
+        }
+      }
+
+      function test(rgbValue, rgb) {
+        const shouldAdd = Math.random() < 0.5;
+        if (shouldAdd) {
+          return Math.min(clamp(rgbValue + 1, startingColor[rgb] - 10, startingColor[rgb] + 10), 255);
+        } else {
+          return Math.max(clamp(rgbValue - 1, startingColor[rgb] - 10, startingColor[rgb] + 10),  0);
+        }
+      }
+
+      function clamp(value, min, max) {
+        return Math.max(min, Math.min(value, max));
+      }
     </script>
   </body>
 </html>
