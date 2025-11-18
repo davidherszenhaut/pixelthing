@@ -16,9 +16,7 @@
   <body>
     <canvas width="1920" height="1080">
     </canvas>
-    <button onclick="vertical()">vertical</button>
-    <button onclick="horizontal()">horizontal</button>
-    <button onclick="testing()">testing</button>
+    <button onclick="pixelthing()">pixelthing</button>
     <input type="color" id="color-picker" />
     <label for="color-picker">starting color</label>
     <script>
@@ -43,54 +41,21 @@
         return [r, g, b];
       }
 
-      function testing() {
+      function pixelthing() {
         let r, g, b;
         for (let i = 0; i < 1920; i++) {
           for (let j = 0; j < 1080; j++) {
-            r = clamp(testing2(startingColor[0]), 0, 255);
-            g = clamp(testing2(startingColor[1]), 0, 255);
-            b = clamp(testing2(startingColor[2]), 0, 255);
+            r = clamp(addVariance(startingColor[0]), 0, 255);
+            g = clamp(addVariance(startingColor[1]), 0, 255);
+            b = clamp(addVariance(startingColor[2]), 0, 255);
             context.fillStyle = `rgb(${r}, ${g}, ${b})`;
             context.fillRect(i, j, 1, 1);
           }
         }
       }
 
-      function testing2(color) {
+      function addVariance(color) {
         return Math.floor(Math.random() * ((color + 255 * variance) - (color - 255 * variance) + 1)) + (color - 255 * variance);
-      }
-
-      function vertical() {
-        for (let i = 0; i < 1920; i++) {
-          for (let j = 0; j < 1080; j++) {
-            currentColor[0] = test(currentColor[0], 0);
-            currentColor[1] = test(currentColor[1], 1);
-            currentColor[2] = test(currentColor[2], 2);
-            context.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
-            context.fillRect(i, j, 1, 1);
-          }
-        }
-      }
-
-      function horizontal() {
-        for (let i = 0; i < 1080; i++) {
-          for (let j = 0; j < 1920; j++) {
-            currentColor[0] = test(currentColor[0], 0);
-            currentColor[1] = test(currentColor[1], 1);
-            currentColor[2] = test(currentColor[2], 2);
-            context.fillStyle = `rgb(${currentColor[0]}, ${currentColor[1]}, ${currentColor[2]})`;
-            context.fillRect(j, i, 1, 1);
-          }
-        }
-      }
-
-      function test(rgbValue, rgb) {
-        const shouldAdd = Math.random() < 0.5;
-        if (shouldAdd) {
-          return Math.min(clamp(rgbValue + 1, startingColor[rgb] - 10, startingColor[rgb] + 10), 255);
-        } else {
-          return Math.max(clamp(rgbValue - 1, startingColor[rgb] - 10, startingColor[rgb] + 10),  0);
-        }
       }
 
       function clamp(value, min, max) {
