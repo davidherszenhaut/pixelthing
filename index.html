@@ -8,7 +8,9 @@
     <style>
       canvas {
         border: 1px solid black;
+        min-height: 75%;
         max-height: 75%;
+        min-width: 75%;
         max-width: 75%;
       }
     </style>
@@ -21,6 +23,10 @@
     <input type="color" id="color-picker" />
     <label for="variance">variance (0 to 100%)</label>
     <input type="number" id="variance" min="0" max="100" value="20" />
+    <label for="width">width</label>
+    <input type="number" id="width" min="1" value="1920" />
+    <label for="height">height</label>
+    <input type="number" id="height" min="1" value="1080" />
     <script>
       const canvas = document.querySelector("canvas");
       const context = canvas.getContext("2d");
@@ -34,6 +40,8 @@
         startingColor = hexToRGB(event.target.value);
       }
       let variance = .2;
+      let width = 1920;
+      let height = 1080;
       let currentColor = startingColor;
 
       function hexToRGB(hex) {
@@ -44,10 +52,15 @@
       }
 
       function pixelthing() {
+        context.clearRect(0, 0, canvas.width, canvas.height);
         variance = document.getElementById("variance").valueAsNumber / 100;
+        width = document.getElementById("width").valueAsNumber;
+        height = document.getElementById("height").valueAsNumber;
+        canvas.width = width;
+        canvas.height = height;
         let r, g, b;
-        for (let i = 0; i < 1920; i++) {
-          for (let j = 0; j < 1080; j++) {
+        for (let i = 0; i < width; i++) {
+          for (let j = 0; j < height; j++) {
             r = clamp(addVariance(startingColor[0]), 0, 255);
             g = clamp(addVariance(startingColor[1]), 0, 255);
             b = clamp(addVariance(startingColor[2]), 0, 255);
